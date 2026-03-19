@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>یادمان</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        
+        <main id="scroll-container" class="scroll-container hidden">
+            </main>
 
+        <div id="loader" class="state-container">
+            <div class="spinner"></div>
+            <p>در حال دریافت اطلاعات...</p>
+        </div>
+
+        <div id="error-message" class="state-container hidden">
+            <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <p>متاسفانه در دریافت اطلاعات مشکلی رخ داد.</p>
+            <button onclick="location.reload()" class="retry-btn">تلاش مجدد</button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
