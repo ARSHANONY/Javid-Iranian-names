@@ -1,1 +1,231 @@
+/* =========================================
+   Variables & Reset
+   ========================================= */
+:root {
+    --bg-parchment: #f4ebd8;
+    --text-main: #2c2a27;
+    --text-muted: #5c5549;
+    --accent-color: #4a4036;
+    --accent-hover: #312a23;
+    --frame-bg: #fffbf2;
+    --font-main: 'Vazirmatn', sans-serif;
+}
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    background-color: #1a1a1a; /* Dark background outside the mobile wrapper */
+    font-family: var(--font-main);
+    color: var(--text-main);
+    overflow: hidden; /* Prevent page-level scroll */
+}
+
+/* =========================================
+   Layout & Typography
+   ========================================= */
+.app-wrapper {
+    max-width: 480px; /* Mobile-first width */
+    margin: 0 auto;
+    height: 100vh;
+    height: 100dvh; /* Modern mobile height fix */
+    background-color: var(--bg-parchment);
+    /* Parchment texture effect via radial gradients & box shadow */
+    background-image: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.03) 100%);
+    box-shadow: inset 0 0 60px rgba(139, 115, 85, 0.15), 0 0 20px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Scroll Container (TikTok/Reels style) */
+.scroll-container {
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.scroll-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+}
+
+/* =========================================
+   Slide (Individual Memorial Entry)
+   ========================================= */
+.slide {
+    height: 100vh;
+    height: 100dvh;
+    width: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    position: relative;
+}
+
+.slide-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    max-height: 700px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* Animation trigger class */
+.slide-content.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Photo Styling */
+.photo-frame {
+    width: 220px;
+    height: 280px;
+    background-color: var(--frame-bg);
+    padding: 12px;
+    border-radius: 4px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    margin-bottom: 2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2px;
+    filter: sepia(0.2) contrast(0.95); /* Slight vintage feel */
+    transition: opacity 0.3s ease;
+    opacity: 0; /* Hidden until loaded */
+}
+
+.photo.loaded {
+    opacity: 1;
+}
+
+.img-spinner {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(0,0,0,0.1);
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Text Elements */
+.name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-main);
+}
+
+.details {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.details strong {
+    font-weight: 700;
+}
+
+/* Button */
+.btn-container {
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.media-btn {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--accent-color);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 30px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(74, 64, 54, 0.3);
+}
+
+.media-btn:hover, .media-btn:active {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   Utility / States
+   ========================================= */
+.hidden {
+    display: none !important;
+}
+
+.state-container {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.spinner {
+    width: 40px; height: 40px;
+    border: 4px solid rgba(0,0,0,0.1);
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+.error-icon {
+    width: 50px; height: 50px;
+    color: #a03c3c;
+    margin-bottom: 1rem;
+}
+
+.retry-btn {
+    margin-top: 1.5rem;
+    padding: 0.6rem 1.2rem;
+    background: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    border-radius: 20px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
