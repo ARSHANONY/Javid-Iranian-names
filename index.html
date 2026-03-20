@@ -13,15 +13,17 @@
 </head>
 <body>
     <div class="app-wrapper">
-        
-        <main id="scroll-container" class="scroll-container hidden">
-            </main>
 
+        <!-- MAIN SCROLL CONTAINER -->
+        <main id="scroll-container" class="scroll-container hidden"></main>
+
+        <!-- LOADER -->
         <div id="loader" class="state-container">
             <div class="spinner"></div>
             <p>در حال دریافت اطلاعات...</p>
         </div>
 
+        <!-- ERROR -->
         <div id="error-message" class="state-container hidden">
             <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"></circle>
@@ -30,6 +32,62 @@
             </svg>
             <p>متاسفانه در دریافت اطلاعات مشکلی رخ داد.</p>
             <button onclick="location.reload()" class="retry-btn">تلاش مجدد</button>
+        </div>
+
+        <!-- MENU BUTTON (سه خط با رنگ پرچم ایران) -->
+        <div id="menu-button">
+            <span class="bar green"></span>
+            <span class="bar white"></span>
+            <span class="bar red"></span>
+        </div>
+
+        <!-- MENU TABS -->
+        <div id="menu-tabs" class="hidden">
+            <button class="tab-btn" data-tab="home">خانه</button>
+            <button class="tab-btn" data-tab="settings">تنظیمات</button>
+            <button class="tab-btn" data-tab="description">توضیحات</button>
+            <button class="tab-btn" data-tab="explore">اکسپلور تاریخ</button>
+        </div>
+
+        <!-- PAGES -->
+        <div id="pages-container">
+            <!-- HOME PAGE -->
+            <section id="page-home" class="page active">
+                <!-- بک‌گراند و محتوا همان scroll-container فعلی -->
+            </section>
+
+            <!-- SETTINGS PAGE -->
+            <section id="page-settings" class="page hidden">
+                <h2>تنظیمات</h2>
+                <div class="settings-option">
+                    <button id="toggle-music">موزیک خاموش</button>
+                </div>
+                <div class="settings-option">
+                    <button id="toggle-scroll">اسکرول اتوماتیک خاموش</button>
+                </div>
+            </section>
+
+            <!-- DESCRIPTION PAGE -->
+            <section id="page-description" class="page hidden">
+                <div class="description-box">
+                    <h2>توضیحات</h2>
+                    <p class="author">نویسنده: Arshan</p>
+                    <p class="desc-text">اینجا متن توضیحات متوسط قرار می‌گیرد...</p>
+                    <div class="social-buttons">
+                        <button class="social-btn instagram">Instagram</button>
+                        <button class="social-btn telegram">Telegram</button>
+                        <button class="social-btn x">X</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EXPLORE PAGE -->
+            <section id="page-explore" class="page hidden">
+                <div class="explore-box">
+                    <h2>اکسپلور تاریخ</h2>
+                    <p>این صفحه برای بررسی تاریخ‌ها و اطلاعات مرتبط قرار گرفته است.</p>
+                </div>
+            </section>
         </div>
 
     </div>
