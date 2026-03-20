@@ -113,7 +113,7 @@ function createSlide(entry) {
    ========================================================= */
 function attemptLoadImage(imgElement, photoName) {
     const spinner = imgElement.previousElementSibling;
-    const jpgUrl = `${PHOTO_BASE_URL}${photoName}.jpg`;
+    const jpgUrl = `${PHOTO_BASE_URL}${photoName}.jpeg`;
     const pngUrl = `${PHOTO_BASE_URL}${photoName}.png`;
 
     const img = new Image();
