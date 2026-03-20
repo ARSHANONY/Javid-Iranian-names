@@ -113,38 +113,36 @@ function createSlide(entry) {
    ========================================================= */
 function attemptLoadImage(imgElement, photoName) {
     const spinner = imgElement.previousElementSibling;
-    const jpgUrl = `${PHOTO_BASE_URL}${photoName}.jpeg`;
-    const pngUrl = `${PHOTO_BASE_URL}${photoName}.png`;
+    const jpegUrl = `${PHOTO_BASE_URL}${photoName}.jpeg`;
+    const jpgUrl  = `${PHOTO_BASE_URL}${photoName}.jpg`;
+    const pngUrl  = `${PHOTO_BASE_URL}${photoName}.png`;
 
     const img = new Image();
 
-    // 1. Try JPG
     img.onload = () => {
-        imgElement.src = jpgUrl;
+        imgElement.src = img.src;
         imgElement.classList.add('loaded');
         if (spinner) spinner.style.display = 'none';
     };
 
     img.onerror = () => {
-        // 2. Try PNG on JPG fail
-        const imgPng = new Image();
-        imgPng.onload = () => {
-            imgElement.src = pngUrl;
+        const img2 = new Image();
+        img2.onload = () => {
+            imgElement.src = img2.src;
             imgElement.classList.add('loaded');
             if (spinner) spinner.style.display = 'none';
         };
-        
-        imgPng.onerror = () => {
-            // 3. Fallback on PNG fail
+        img2.onerror = () => {
             imgElement.src = FALLBACK_IMAGE;
             imgElement.classList.add('loaded');
             if (spinner) spinner.style.display = 'none';
         };
-        
-        imgPng.src = pngUrl; // Trigger PNG load
+        img2.src = pngUrl;
     };
 
-    img.src = jpgUrl; // Trigger JPG load
+    // اول jpeg بعد jpg
+    img.src = jpegUrl;
+    img.onerror = () => img.src = jpgUrl;
 }
 
 /* =========================================================
