@@ -1,7 +1,7 @@
 /* =========================================
    Variables & Reset
    ========================================= */
-:root {
+   :root {
     --bg-parchment: #f4ebd8;
     --text-main: #2c2a27;
     --text-muted: #5c5549;
@@ -9,11 +9,11 @@
     --accent-hover: #312a23;
     --frame-bg: #fffbf2;
     --font-main: 'Vazirmatn', sans-serif;
-    --green: #3cb043;
-    --white: #ffffff;
-    --red: #e53935;
-    --blue: #1da1f2;
-    --black: #000000;
+    
+    /* NEW FEATURE: Colors for social buttons */
+    --color-instagram: #e1306c;
+    --color-telegram: #0088cc;
+    --color-x: #000000;
 }
 
 * {
@@ -25,234 +25,412 @@
 body, html {
     width: 100%;
     height: 100%;
-    background-color: #1a1a1a; /* Dark background outside the wrapper */
+    background-color: #1a1a1a; 
     font-family: var(--font-main);
     color: var(--text-main);
-    overflow: hidden;
+    overflow: hidden; 
 }
 
 /* =========================================
-   Layout & Wrapper
+   Layout & Backgrounds
    ========================================= */
 .app-wrapper {
-    max-width: 480px;
+    max-width: 480px; 
     margin: 0 auto;
     height: 100vh;
-    height: 100dvh;
+    height: 100dvh; 
+    position: relative;
+    overflow: hidden;
+    transition: background 0.5s ease; /* Smooth background transition */
+}
+
+/* NEW FEATURE: Customizable Backgrounds per Tab */
+.bg-home {
     background-color: var(--bg-parchment);
     background-image: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.03) 100%);
     box-shadow: inset 0 0 60px rgba(139, 115, 85, 0.15), 0 0 20px rgba(0,0,0,0.5);
-    position: relative;
-    overflow: hidden;
+}
+
+.bg-settings {
+    background-color: #e8f0fe;
+    background-image: linear-gradient(135deg, #e8f0fe 0%, #cfdef3 100%);
+}
+
+.bg-description {
+    background-color: #fdfbfb;
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+}
+
+.bg-explore {
+    background-color: #faebd7;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.02) 10px, rgba(0,0,0,0.02) 20px);
 }
 
 /* =========================================
-   Scroll Container
+   Tabs System
    ========================================= */
-.scroll-container {
-    height: 100%;
-    width: 100%;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-.scroll-container::-webkit-scrollbar {
-    display: none;
-}
-
-/* =========================================
-   Pages
-   ========================================= */
-.page {
-    width: 100%;
-    height: 100%;
-    display: none;
+.tab-page {
     position: absolute;
     top: 0;
     left: 0;
-    padding: 1rem;
+    width: 100%;
+    height: 100%;
     overflow-y: auto;
-    background-size: cover;
-    background-position: center;
+    padding-top: 60px; /* Space for hamburger menu */
 }
 
-.page.active {
-    display: block;
+.active-tab {
+    z-index: 10;
 }
 
-/* Example page backgrounds */
-#page-home {
-    background-color: #f4ebd8;
-    background-image: url('assets/home-bg.jpg'); /* مسیر بک‌گراند اصلی */
-    background-size: cover;
+/* Scroll Container (TikTok/Reels style) */
+.scroll-container {
+    padding-top: 0; /* Override padding for home to keep reels full screen */
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
 }
 
-#page-settings {
-    background-color: #fafafa;
-}
-
-#page-description {
-    background-color: #fff8f0;
-}
-
-#page-explore {
-    background-color: #f0f4ff;
+.scroll-container::-webkit-scrollbar {
+    display: none; 
 }
 
 /* =========================================
-   Menu Button (سه خط رنگی) 
+   Menu (Hamburger & Overlay)
    ========================================= */
-#menu-button {
+.menu-btn {
     position: absolute;
-    top: 1rem;
-    left: 1rem;
-    width: 40px;
-    height: 30px;
+    top: 15px;
+    right: 15px;
+    width: 35px;
+    height: 25px;
+    z-index: 100;
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    cursor: pointer;
-    z-index: 1000;
 }
 
-#menu-button .bar {
-    height: 6px;
-    border-radius: 3px;
-}
-
-#menu-button .green { background-color: var(--green); }
-#menu-button .white { background-color: var(--white); }
-#menu-button .red   { background-color: var(--red); }
-
-/* =========================================
-   Menu Tabs
-   ========================================= */
-#menu-tabs {
-    position: absolute;
-    top: 60px;
-    left: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    z-index: 900;
-}
-
-#menu-tabs.hidden {
-    display: none;
-}
-
-#menu-tabs .tab-btn {
-    padding: 0.6rem 1rem;
-    border: none;
-    border-radius: 8px;
-    background-color: var(--bg-parchment);
-    color: var(--text-main);
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-#menu-tabs .tab-btn.active {
-    background-color: var(--green);
-    color: var(--white);
-}
-
-/* =========================================
-   Settings Page
-   ========================================= */
-.settings-option {
-    margin: 1rem 0;
-}
-
-.settings-option button {
+.menu-btn span {
+    display: block;
+    height: 4px;
     width: 100%;
-    padding: 0.8rem;
-    border-radius: 8px;
-    border: 2px solid var(--accent-color);
-    background-color: var(--bg-parchment);
-    color: var(--text-main);
-    font-weight: bold;
-    cursor: pointer;
+    border-radius: 2px;
     transition: 0.3s;
 }
 
-.settings-option button.active {
-    background-color: var(--green);
-    color: var(--white);
+.nav-menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(5px);
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.active-indicator {
+    margin-bottom: 30px;
+    font-size: 1.2rem;
+    color: #4cd137; /* Green to indicate active */
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.nav-links {
+    list-style: none;
+    text-align: center;
+}
+
+.nav-links li {
+    margin: 15px 0;
+}
+
+.nav-links button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    font-family: var(--font-main);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.nav-links button:hover, .nav-links button.active-nav {
+    color: #4cd137;
 }
 
 /* =========================================
-   Description Page
+   UI Components (Boxes, Toggles, Buttons)
    ========================================= */
-.description-box {
-    padding: 1rem;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+.box-container {
+    background: rgba(255,255,255,0.9);
+    margin: 20px;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    color: #333;
+}
+
+.box-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* Toggle Switch */
+.setting-item {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
 }
 
-.description-box h2 {
-    margin-bottom: 0.5rem;
-    color: var(--text-main);
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
 }
 
-.description-box .author {
-    font-size: 0.9rem;
-    color: var(--text-muted);
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
-.description-box .desc-text {
-    font-size: 1rem;
-    color: var(--text-main);
-    margin-bottom: 1rem;
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
 }
 
-/* Social Buttons */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider { background-color: #239f40; }
+input:checked + .slider:before { transform: translateX(22px); }
+
+/* Description Tab & Social Buttons */
+.description-box { text-align: center; }
+.author-text { color: #666; margin-bottom: 15px; }
+.desc-text { line-height: 1.8; margin-bottom: 30px; text-align: justify;}
+
 .social-buttons {
     display: flex;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .social-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem 0.8rem;
+    gap: 10px;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
     border-radius: 8px;
     font-weight: bold;
-    color: #fff;
-    cursor: pointer;
-    gap: 0.5rem;
-    flex: 1;
-    transition: 0.3s;
+    font-size: 1.1rem;
+    transition: transform 0.2s;
 }
 
-.social-btn.instagram { background-color: var(--red); }
-.social-btn.telegram  { background-color: var(--blue); }
-.social-btn.x         { background-color: var(--black); }
+.social-btn:hover { transform: scale(1.02); }
+
+.instagram-btn { background-color: var(--color-instagram); }
+.telegram-btn { background-color: var(--color-telegram); }
+.x-btn { background-color: var(--color-x); }
+
+.icon-circle {
+    background: rgba(255,255,255,0.2);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 /* =========================================
-   Explore Page
+   Slide (Existing code kept intact)
    ========================================= */
-.explore-box {
-    padding: 1rem;
-    background-color: #e0e8ff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+.slide {
+    height: 100vh;
+    height: 100dvh;
+    width: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    position: relative;
 }
 
-.explore-box h2 {
-    margin-bottom: 0.5rem;
+.slide-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    max-height: 700px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.slide-content.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.photo-frame {
+    width: 220px;
+    height: 280px;
+    background-color: var(--frame-bg);
+    padding: 12px;
+    border-radius: 4px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    margin-bottom: 2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2px;
+    filter: sepia(0.2) contrast(0.95);
+    transition: opacity 0.3s ease;
+    opacity: 0; 
+}
+
+.photo.loaded { opacity: 1; }
+
+.img-spinner {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(0,0,0,0.1);
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
     color: var(--text-main);
 }
 
-.explore-box p {
-    font-size: 0.95rem;
+.details {
+    font-size: 1.1rem;
     color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
 }
+
+.details strong { font-weight: 700; }
+
+.btn-container {
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.media-btn {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--accent-color);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 30px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(74, 64, 54, 0.3);
+}
+
+.media-btn:hover, .media-btn:active {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   Utility / States
+   ========================================= */
+.hidden { display: none !important; }
+
+.state-container {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.spinner {
+    width: 40px; height: 40px;
+    border: 4px solid rgba(0,0,0,0.1);
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+.error-icon {
+    width: 50px; height: 50px;
+    color: #a03c3c;
+    margin-bottom: 1rem;
+}
+
+.retry-btn {
+    margin-top: 1.5rem;
+    padding: 0.6rem 1.2rem;
+    background: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    border-radius: 20px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
