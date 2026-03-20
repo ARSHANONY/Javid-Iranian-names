@@ -2,7 +2,7 @@
    CONFIGURATION
    Replace the USERNAME and REPO to match your GitHub project
    ========================================================= */
-const REPO_BASE_URL = 'https://raw.githubusercontent.com/USERNAME/REPO/main';
+const REPO_BASE_URL = 'https://raw.githubusercontent.com/ARSHANONY/Javid-Iranian-names/main';
 const DATA_URL = `${REPO_BASE_URL}/data.json`;
 const PHOTO_BASE_URL = `${REPO_BASE_URL}/Photo/`;
 
