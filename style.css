@@ -275,6 +275,62 @@ input:checked + .slider:before { transform: translateX(22px); }
 }
 
 /* =========================================
+   NEW FEATURE: Explore Page Glass Effect
+   ========================================= */
+.box-container.glass-effect {
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.glass-action-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.glass-action-wrapper:hover {
+    transform: scale(1.05);
+}
+
+.glass-play-btn {
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    font-size: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    color: #333;
+    cursor: pointer;
+    margin-bottom: 15px;
+    padding-left: 6px; /* slightly adjust play triangle center */
+    transition: background 0.3s ease;
+}
+
+.glass-text-badge {
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    color: #333;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================================
    Slide (Existing code kept intact)
    ========================================= */
 .slide {
