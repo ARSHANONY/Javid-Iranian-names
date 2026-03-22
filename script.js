@@ -98,6 +98,20 @@ function switchTab(tabId) {
 }
 
 /* =========================================================
+   NEW FEATURE: REDIRECT FOR EXPLORE PAGE
+   ========================================================= */
+function redirectToExplore() {
+    const currentUrl = window.location.href;
+    // Replace the specific domain as requested
+    if (currentUrl.includes('ir.yadman.xo.je')) {
+        window.location.href = currentUrl.replace('ir.yadman.xo.je', 'feed.yadman.xo.je');
+    } else {
+        // Fallback for absolute navigation if not on the original URL
+        window.location.href = 'https://feed.yadman.xo.je';
+    }
+}
+
+/* =========================================================
    NEW FEATURE: MUSIC PLAYBACK LOGIC
    ========================================================= */
 // This function plays a random file from MUSIC_FILES array
